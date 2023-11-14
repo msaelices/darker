@@ -1,10 +1,9 @@
 """Command line parsing for the ``darker`` binary"""
 
-from argparse import SUPPRESS, ArgumentParser, Namespace
+from argparse import SUPPRESS, ArgumentParser, BooleanOptionalAction, Namespace
 from typing import Any, List, Optional, Tuple
 
 from black import TargetVersion
-
 from darker import help as hlp
 from darker.argparse_helpers import (
     LogLevelAction,
@@ -41,7 +40,7 @@ def make_argument_parser(require_src: bool) -> ArgumentParser:
 
     add_arg(hlp.SRC, "src", nargs="+" if require_src else "*", metavar="PATH")
     add_arg(hlp.REVISION, "-r", "--revision", default="HEAD", metavar="REV")
-    add_arg(hlp.DIFF, "--diff", action="store_true")
+    add_arg(hlp.DIFF, "--diff", default=False, action=BooleanOptionalAction)
     add_arg(hlp.STDOUT, "-d", "--stdout", action="store_true")
     add_arg(hlp.STDIN_FILENAME, "--stdin-filename", metavar="PATH")
     add_arg(hlp.CHECK, "--check", action="store_true")
